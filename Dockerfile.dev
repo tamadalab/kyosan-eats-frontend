@@ -1,0 +1,25 @@
+# M1/M2 Mac (arm64) に対応した Debian ベースの Node.js slim イメージ
+FROM --platform=linux/arm64 node:20-slim
+
+# 必要なパッケージをインストール（git, bash）
+RUN apt-get update && \
+    apt-get install -y git bash && \
+    rm -rf /var/lib/apt/lists/*
+
+# 作業ディレクトリ
+WORKDIR /app
+
+# package.json と package-lock.json を先にコピー（依存キャッシュ用）
+COPY package*.json ./
+
+# 依存関係をインストール
+RUN npm install
+
+# アプリケーションのソースをコピー
+COPY . .
+
+# Next.js 開発サーバーポート
+EXPOSE 3000
+
+# デフォルトコマンド：Docker コンテナ外部からアクセス可能にする
+CMD ["npm", "run", "dev", "--", "-H", "0.0.0.0", "-p", "3000"]
