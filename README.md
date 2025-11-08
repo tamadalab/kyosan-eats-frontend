@@ -36,22 +36,28 @@ docker run -it -p 3000:3000 -v $(pwd):/app --workdir /app --name kyosan-eats-fro
 
 ```
 
-5. コンテナ内で依存関係をインストール（最初の 1 回だけ）
+5. コンテナ内で依存関係をインストール（最初の 1 回だけ、4 を実行してエラーが発生すればこれ以降の動作を行う）
 
 ```bash
 npm install
 ```
 
-5. (補足)コンテナの中に別のターミナルから入る方法
+6. (補足)コンテナの中に別のターミナルから入る方法
 
 ```bash
 docker exec -it kyosan-eats-frontend bash
 ```
 
-5. (補足)コンテナから出る方法
+7. (補足)コンテナから出る方法
 
 ```bash
 exit
+```
+
+8. ブラウザで開く URL
+
+```bash
+http://localhost:3000
 ```
 
 ## git の簡単な操作方法
