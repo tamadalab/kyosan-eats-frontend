@@ -1,9 +1,9 @@
 # M1/M2 Mac (arm64) に対応した Debian ベースの Node.js slim イメージ
-FROM --platform=linux/arm64 node:20-slim
+FROM node:20
 
 # 必要なパッケージをインストール（git, bash）
-RUN apt-get update && \
-    apt-get install -y git bash && \
+RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends git bash && \
     rm -rf /var/lib/apt/lists/*
 
 # 作業ディレクトリ
