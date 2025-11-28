@@ -46,7 +46,7 @@ export default function CalendarPopup({ open, onClose, onSelect }: Props) {
     // split into weeks
     const weeksArr: Array<Array<Date>> = [];
     for (let i = 0; i < cells.length; i += 7) {
-      const week = cells.slice(i, i + 7).map((d) => (d as Date));
+      const week = cells.slice(i, i + 7).map((d) => d as Date);
       weeksArr.push(week);
     }
     return weeksArr;
@@ -54,7 +54,10 @@ export default function CalendarPopup({ open, onClose, onSelect }: Props) {
 
   if (!open) return null;
 
-  const title = cursor.toLocaleString(undefined, { month: "long", year: "numeric" });
+  const title = cursor.toLocaleString(undefined, {
+    month: "long",
+    year: "numeric",
+  });
 
   function prevMonth() {
     setCursor((c) => new Date(c.getFullYear(), c.getMonth() - 1, 1));
@@ -75,14 +78,28 @@ export default function CalendarPopup({ open, onClose, onSelect }: Props) {
     <div className="ce-overlay" role="dialog" aria-modal="true">
       <div className="ce-popup">
         <div className="ce-header">
-          <button className="ce-icon-btn" onClick={prevMonth} aria-label="前の月">◀</button>
+          <button
+            className="ce-icon-btn"
+            onClick={prevMonth}
+            aria-label="前の月"
+          >
+            ◀
+          </button>
           <div className="ce-title">{title}</div>
-          <button className="ce-icon-btn" onClick={nextMonth} aria-label="次の月">▶</button>
+          <button
+            className="ce-icon-btn"
+            onClick={nextMonth}
+            aria-label="次の月"
+          >
+            ▶
+          </button>
         </div>
 
         <div className="ce-weekdays">
-          {['日','月','火','水','木','金','土'].map((w) => (
-            <div key={w} className="ce-weekday">{w}</div>
+          {["日", "月", "火", "水", "木", "金", "土"].map((w) => (
+            <div key={w} className="ce-weekday">
+              {w}
+            </div>
           ))}
         </div>
 
@@ -95,7 +112,9 @@ export default function CalendarPopup({ open, onClose, onSelect }: Props) {
                 return (
                   <button
                     key={di}
-                    className={`ce-day ${isCurrentMonth ? '' : 'ce-muted'} ${isToday ? 'ce-today' : ''}`}
+                    className={`ce-day ${isCurrentMonth ? "" : "ce-muted"} ${
+                      isToday ? "ce-today" : ""
+                    }`}
                     onClick={() => handleSelect(d)}
                     aria-label={d.toDateString()}
                   >
@@ -108,7 +127,9 @@ export default function CalendarPopup({ open, onClose, onSelect }: Props) {
         </div>
 
         <div className="ce-footer">
-          <button className="ce-close" onClick={onClose}>閉じる</button>
+          <button className="ce-close" onClick={onClose}>
+            閉じる
+          </button>
         </div>
       </div>
     </div>
