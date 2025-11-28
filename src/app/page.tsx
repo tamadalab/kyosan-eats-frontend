@@ -2,18 +2,34 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { getCafeteriasByDate } from "@/lib/mock";
+import { fetchStoreHoursByDate, MergedStoreInfo } from "@/lib/fetchStoreHours";
 
 export default function Home() {
   const today = new Date().toISOString().slice(0, 10);
   const [date, setDate] = useState<string>(today);
-  const [cafeterias, setCafeterias] = useState<Array<{ id: number; name: string; location: string; time: string }>>([]);
+  const [stores, setStores] = useState<MergedStoreInfo[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const [showPicker, setShowPicker] = useState<boolean>(false);
   const pickerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const data = getCafeteriasByDate(date);
-    setCafeterias(data);
+    let cancelled = false;
+    async function run() {
+      setLoading(true);
+      setError(null);
+      const { data, error } = await fetchStoreHoursByDate(date);
+      if (cancelled) return;
+      if (error) {
+        setError(error);
+        setStores([]);
+      } else {
+        setStores(data);
+      }
+      setLoading(false);
+    }
+    run();
+    return () => { cancelled = true; };
   }, [date]);
 
   // 外部クリックでポップアップを閉じる
@@ -87,16 +103,20 @@ export default function Home() {
       
 
       <section className="cafeteria-list">
-        {cafeterias.length === 0 ? (
-          <p className="no-data">該当する学食はありません。</p>
-        ) : (
+        {loading && <p className="loading">読み込み中...</p>}
+        {!loading && error && <p className="error">取得エラー: {error}</p>}
+        {!loading && !error && stores.length === 0 && (
+          <p className="no-data">該当する店舗はありません。</p>
+        )}
+        {!loading && !error && stores.length > 0 && (
           <div>
-            {cafeterias.map((c, idx) => (
-              <div className="caf-row" key={c.id}>
+            {stores.map((s, idx) => (
+              <div className="caf-row" key={`${s.shop_id}-${s.date}-${s.start_time}`}>
                 <div className="caf-marker">{idx === 0 ? "🔴" : "◯"}</div>
-                <div className="caf-name">{c.name}</div>
-                <div className="caf-location">{c.location}</div>
-                <div className="caf-time">{c.time}</div>
+                <div className="caf-name">{s.store_name}</div>
+                <div className="caf-location">{s.location_name}</div>
+                <div className="caf-time">{s.start_time} - {s.end_time}</div>
+                {s.memo && <div className="caf-memo">{s.memo}</div>}
               </div>
             ))}
           </div>
