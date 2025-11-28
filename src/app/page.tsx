@@ -186,7 +186,7 @@ export default function Home() {
                   <div className="caf-name">{s.store_name}</div>
                   <div className="caf-location">{s.location_name}</div>
                   <div className="caf-time">
-                    {s.start_time} - {s.end_time}
+                    {`${s.start_time.slice(0, 5)} - ${s.end_time.slice(0, 5)}`}
                   </div>
                   {s.memo && <div className="caf-memo">{s.memo}</div>}
                 </div>
