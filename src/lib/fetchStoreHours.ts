@@ -30,7 +30,12 @@ export async function fetchStoreHoursByDate(date: string): Promise<{ data: Merge
   const { data: hours, error: hoursErr } = await supabase
     .from("store_hours")
     .select("shop_id, date, start_time, end_time, memo")
-    .eq("date", date) as unknown as { data: StoreHourRow[]; error: any };
+    .eq("date::date", date) as unknown as { data: StoreHourRow[]; error: any };
+
+
+  console.log("fetch date:", date);
+  console.log("raw hours data:", hours);
+
 
   if (hoursErr) {
     return { data: [], error: hoursErr.message };
