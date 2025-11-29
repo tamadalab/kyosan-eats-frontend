@@ -60,6 +60,10 @@ exit
 http://localhost:3000
 ```
 
+```bash
+公開先URL：https://kyosan-eats-frontend.vercel.app/
+```
+
 ## git の簡単な操作方法
 
 1. リモートへのアップロード方法
