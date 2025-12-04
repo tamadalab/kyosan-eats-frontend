@@ -149,20 +149,39 @@ export default function Home() {
       </section>
 
       {showPicker && (
-        <div ref={pickerRef} className="picker-popup">
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => handleDateChange(e.target.value)}
-          />
-          <div style={{ marginTop: 8, textAlign: "right" }}>
-            <button
-              type="button"
-              onClick={() => setShowPicker(false)}
-              className="btn small"
-            >
-              閉じる
-            </button>
+        <div className="picker-overlay" onClick={() => setShowPicker(false)}>
+          <div
+            className="picker-sheet"
+            role="dialog"
+            aria-modal="true"
+            aria-label="日付を選択"
+            ref={pickerRef}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="picker-header">
+              <div className="picker-title">日付を選択</div>
+              <button
+                type="button"
+                className="picker-close"
+                onClick={() => setShowPicker(false)}
+                aria-label="閉じる"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="picker-body">
+              <input
+                className="picker-input"
+                type="date"
+                value={date}
+                onChange={(e) => handleDateChange(e.target.value)}
+              />
+            </div>
+            <div className="picker-actions">
+              <button type="button" className="btn small" onClick={() => setShowPicker(false)}>
+                閉じる
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -195,6 +214,8 @@ export default function Home() {
           </div>
         )}
       </section>
+
+      <br/>
 
       <footer className="contact-link">
         <Link href="/contact">問合せはコチラ</Link>
