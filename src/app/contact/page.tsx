@@ -70,6 +70,7 @@ export default function ContactPage() {
             onChange={(e) => setEmail(e.target.value)}
             required
             className="input-large"
+            style={{ border: "1px solid #333", borderRadius: 8 }}
           />
 
           <label htmlFor="message">内容</label>
@@ -81,7 +82,7 @@ export default function ContactPage() {
             required
             rows={12}
             className="textarea-large"
-            style={{ border: "2px solid #333", borderRadius: 8 }}
+            style={{ border: "1px solid #333", borderRadius: 8 }}
             placeholder={"食堂に関する問い合わせはこちらまで\ne-mail: gakusei-bu-gs@star.kyoto-su.ac.jp\nTel. 075-705-1432\nFax. 075-705-1509"}
           />
 
