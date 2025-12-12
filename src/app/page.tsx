@@ -201,7 +201,7 @@ export default function Home() {
                   className="caf-row"
                   key={`${s.shop_id}-${s.date}-${s.start_time}`}
                 >
-                  <div className="caf-marker">{openNow ? "🔴" : "◯"}</div>
+                  <div className="caf-marker">{openNow ? "🟢" : "🔴"}</div>
                   <div className="caf-name">{s.store_name}</div>
                   <div className="caf-location">{s.location_name}</div>
                   <div className="caf-time">

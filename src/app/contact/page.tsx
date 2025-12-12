@@ -9,14 +9,34 @@ export default function ContactPage() {
   const [message, setMessage] = useState("");
   const [sent, setSent] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // 今はバックエンドがないのでコンソールや簡易UIで完了を示す
-    console.log("問い合わせ送信（モック）", { subject, message });
-    setSent(true);
-    // フォームをリセット
-    setSubject("");
-    setMessage("");
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email,
+          content: message,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        alert(`送信に失敗しました: ${errorData.error}`);
+        return;
+      }
+
+      console.log("問い合わせ送信完了");
+      setSent(true);
+      // フォームをリセット
+      setSubject("");
+      setEmail("");
+      setMessage("");
+    } catch (error) {
+      console.error("送信エラー:", error);
+      alert("送信に失敗しました");
+    }
   };
 
   return (
@@ -25,8 +45,8 @@ export default function ContactPage() {
 
   {sent ? (
         <>
-          <p style={{ color: "green" }}>送信しました（モック）。</p>
-          <div style={{ display: "flex", gap: 12 }}>
+          <p style={{ color: "green", textAlign: "center" }}>送信しました。</p>
+          <div style={{ display: "flex", gap: 12, justifyContent: "center", alignItems: "center" }}>
             <button
               type="button"
               onClick={() => {
@@ -61,6 +81,7 @@ export default function ContactPage() {
             required
             rows={12}
             className="textarea-large"
+            style={{ border: "2px solid #333", borderRadius: 8 }}
             placeholder={"食堂に関する問い合わせはこちらまで\ne-mail: gakusei-bu-gs@star.kyoto-su.ac.jp\nTel. 075-705-1432\nFax. 075-705-1509"}
           />
 
