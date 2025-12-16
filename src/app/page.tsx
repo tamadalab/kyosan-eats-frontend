@@ -202,7 +202,15 @@ export default function Home() {
                   key={`${s.shop_id}-${s.date}-${s.start_time}`}
                 >
                   <div className="caf-marker">{openNow ? "🟢" : "🔴"}</div>
-                  <div className="caf-name">{s.store_name}</div>
+                  <div className="caf-name">
+                    {s.shop_url ? (
+                      <a href={s.shop_url} target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "underline" }}>
+                        {s.store_name}
+                      </a>
+                    ) : (
+                      s.store_name
+                    )}
+                  </div>
                   <div className="caf-location">{s.location_name}</div>
                   <div className="caf-time">
                     {`${s.start_time.slice(0, 5)} - ${s.end_time.slice(0, 5)}`}
