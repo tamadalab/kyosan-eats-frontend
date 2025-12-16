@@ -12,12 +12,14 @@ export type ShopRow = {
   shop_id: number;
   store_name: string;
   location_name: string;
+  shop_url: string | null;
 };
 
 export type MergedStoreInfo = {
   shop_id: number;
   store_name: string;
   location_name: string;
+  shop_url: string | null;
   date: string;
   start_time: string;
   end_time: string;
@@ -47,7 +49,7 @@ export async function fetchStoreHoursByDate(date: string): Promise<{ data: Merge
   const shopIds = Array.from(new Set(hours.map((h: StoreHourRow) => h.shop_id)));
   const { data: shops, error: shopsErr } = await supabase
     .from("shop_name")
-    .select("shop_id, store_name, location_name")
+    .select("shop_id, store_name, location_name, shop_url")
     .in("shop_id", shopIds) as unknown as { data: ShopRow[]; error: any };
 
   if (shopsErr) {
@@ -63,6 +65,7 @@ export async function fetchStoreHoursByDate(date: string): Promise<{ data: Merge
       shop_id: h.shop_id,
       store_name: shop?.store_name || "不明",
       location_name: shop?.location_name || "不明",
+      shop_url: shop?.shop_url ?? null,
       date: h.date,
       start_time: h.start_time,
       end_time: h.end_time,
