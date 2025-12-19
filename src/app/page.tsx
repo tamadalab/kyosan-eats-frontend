@@ -225,8 +225,14 @@ export default function Home() {
 
       <br/>
 
+      {/* 右下の問い合わせリンク */}
       <footer className="contact-link">
         <Link href="/contact">問合せはコチラ</Link>
+      </footer>
+
+      {/* 左下キャンパスマップリンク */}
+      <footer className="campus-map-link">
+        <Link href="https://jvweb.kyoto-su.ac.jp/s/campusmap/?_gl=1*blnqzd*_gcl_au*NjUyOTg2MDIwLjE3NjYxMzE3NDA.">キャンパスマップ</Link>
       </footer>
     </main>
   );
