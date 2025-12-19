@@ -224,6 +224,9 @@ export default function Home() {
       </section>
 
       <br/>
+      <br/>
+      <br/>
+
 
       {/* 右下の問い合わせリンク */}
       <footer className="contact-link">
