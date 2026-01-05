@@ -329,9 +329,20 @@ input[type="date"] {
 	.contact-link {
 		position: absolute;
 		right: 16px;
-		bottom: 16px;
+		bottom: 20px;
 		margin-top: 0;
 		text-align: right;
+		white-space: nowrap;
+		z-index: 10;
+	}
+
+	/* キャンパスマップのリンク（左下固定で横並び維持） */
+	.campus-map-link {
+		position: absolute;
+		left: 16px;
+		bottom: 20px;
+		margin-top: 0;
+		text-align: left;
 		white-space: nowrap;
 		z-index: 10;
 	}
@@ -344,17 +355,6 @@ input[type="date"] {
 		justify-content: center;
 		gap: 16px;
 	}
-
-/* キャンパスマップのリンク（左下固定で横並び維持） */
-.campus-map-link {
-	position: absolute;
-	left: 16px;
-	bottom: 16px;
-	margin-top: 0;
-	text-align: left;
-	white-space: nowrap;
-	z-index: 10;
-}
 
 
 

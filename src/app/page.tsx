@@ -11,7 +11,19 @@ export default function Home() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [showPicker, setShowPicker] = useState<boolean>(false);
+  const [updateTime, setUpdateTime] = useState<string>("");
   const pickerRef = useRef<HTMLDivElement | null>(null);
+
+  // クライアント側でのみ現在時刻と日付を表示
+  useEffect(() => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+    const day = now.getDate();
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    setUpdateTime(`ページを読み込んだ時刻：${year}/${month}/${day} ${hours}:${minutes} `);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -123,9 +135,17 @@ export default function Home() {
 
   return (
     <main className="container page-center">
-      <header className="site-logo">
-        <span className="logo-blue">Kyosan</span>
-        <span className="logo-green"> Eats</span>
+      {updateTime && (
+        <div style={{ fontSize: "0.9rem", color: "#666", marginBottom: "16px" }}>
+          {updateTime}
+        </div>
+      )}
+
+      <header style={{ display: "flex", alignItems: "baseline", gap: "16px", justifyContent: "center" }}>
+        <div className="site-logo">
+          <span className="logo-blue">Kyosan</span>
+          <span className="logo-green"> Eats</span>
+        </div>
       </header>
 
       <section className="date-row">
@@ -142,9 +162,17 @@ export default function Home() {
         <button
           className="btn small"
           type="button"
+          onClick={() => setDate(today)}
+        >
+          今日
+        </button>
+
+        <button
+          className="btn small"
+          type="button"
           onClick={() => setShowPicker((s) => !s)}
         >
-          日付を変更
+          変更
         </button>
       </section>
 
@@ -223,10 +251,9 @@ export default function Home() {
         )}
       </section>
 
-      <br/>
-      <br/>
-      <br/>
-
+      <br />
+      <br />
+      <br />
 
       {/* 右下の問い合わせリンク */}
       <footer className="contact-link">
@@ -237,6 +264,23 @@ export default function Home() {
       <footer className="campus-map-link">
         <Link href="https://jvweb.kyoto-su.ac.jp/s/campusmap/?_gl=1*blnqzd*_gcl_au*NjUyOTg2MDIwLjE3NjYxMzE3NDA.">キャンパスマップ</Link>
       </footer>
+
+      {/* ページ最下部のコピーライト（リンクと同じ高さに固定） */}
+      <div style={{
+        position: "absolute",
+        bottom: "-110px",
+        left: "50%",
+        transform: "translateX(-50%)",
+        textAlign: "center",
+        fontSize: "0.85rem",
+        color: "#999",
+        padding: "30px 0"
+      }}>
+        <p style={{ margin: "0" }}>
+          © 2025 Tamada Lab., Faculty of Information Science and Engineering, Kyoto Sangyo University. All rights reserved.
+        </p>
+      </div>
+
     </main>
   );
 }
