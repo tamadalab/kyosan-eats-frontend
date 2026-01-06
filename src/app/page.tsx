@@ -22,7 +22,7 @@ export default function Home() {
     const day = now.getDate();
     const hours = String(now.getHours()).padStart(2, "0");
     const minutes = String(now.getMinutes()).padStart(2, "0");
-    setUpdateTime(`ページを読み込んだ時刻：${year}/${month}/${day} ${hours}:${minutes} `);
+    setUpdateTime(`※ ${year}/${month}/${day} ${hours}:${minutes} 時点での営業情報です `);
   }, []);
 
   useEffect(() => {
